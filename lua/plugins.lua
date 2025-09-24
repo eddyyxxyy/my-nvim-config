@@ -26,13 +26,6 @@ return {
 				php = { "php_cs_fixer" },
 			},
 		},
-		config = function(_, opts)
-			local conform = require("conform")
-			conform.setup(opts)
-			vim.keymap.set({ "n", "v" }, "<leader>gf", function()
-				conform.format({ lsp_fallback = true, async = false, timeout_ms = 500 })
-			end, { desc = "Format buffer/range" })
-		end,
 	},
 
 	-- Better notifications
@@ -83,6 +76,9 @@ return {
 					{ "<leader>d", group = "debug" },
 					{ "<leader>g", group = "git" },
 					{ "<leader>c", group = "code" },
+					{ "<leader>s", group = "split/window" },
+					{ "<leader>b", group = "buffer" },
+					{ "<leader>e", group = "explorer" },
 				})
 			else
 				wk.register({
@@ -104,24 +100,6 @@ return {
 		"akinsho/toggleterm.nvim",
 		version = "*",
 		opts = { open_mapping = [[<C-\\>]], direction = "horizontal", shade_terminals = true, size = 18 },
-		config = function(_, opts)
-			require("toggleterm").setup(opts)
-			vim.keymap.set({ "n", "t" }, "<C-\\>", function()
-				require("toggleterm").toggle(1)
-			end, { desc = "Toggle terminal (Ctrl+\\)" })
-			vim.keymap.set({ "n", "t" }, "<leader>tt", function()
-				require("toggleterm").toggle(1)
-			end, { desc = "Toggle terminal (leader)" })
-			vim.keymap.set({ "n", "t" }, "<leader>tb", function()
-				vim.cmd("ToggleTerm direction=horizontal")
-			end, { desc = "Toggle terminal bottom (horizontal)" })
-			vim.keymap.set({ "n", "t" }, "<leader>tr", function()
-				vim.cmd("ToggleTerm direction=vertical size=80")
-			end, { desc = "Toggle terminal right (vertical)" })
-			vim.keymap.set({ "n", "t" }, "<leader>tF", function()
-				vim.cmd("ToggleTerm direction=float")
-			end, { desc = "Toggle terminal float" })
-		end,
 	},
 
 	-- Dashboard
@@ -138,13 +116,17 @@ return {
 				"",
 			}
 			dashboard.section.buttons.val = {
-				dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
-				dashboard.button("o", "  Open folder", ":Telescope file_browser path=%:p:h select_buffer=true<CR>"),
-				dashboard.button("g", "  Live grep", ":Telescope live_grep<CR>"),
-				dashboard.button("n", "  New file", ":ene | startinsert<CR>"),
-				dashboard.button("r", "  Recent", ":Telescope oldfiles<CR>"),
+				dashboard.button("f", "  Encontrar Arquivos", ":Telescope find_files<CR>"),
+				dashboard.button(
+					"o",
+					"  Encontrar Pastas",
+					":Telescope file_browser path=%:p:h select_buffer=true<CR>"
+				),
+				dashboard.button("g", "  Live Grep", ":Telescope live_grep<CR>"),
+				dashboard.button("n", "  Novo Arquivo", ":ene | startinsert<CR>"),
+				dashboard.button("r", "  Recente", ":Telescope oldfiles<CR>"),
 				dashboard.button("t", "  Terminal", ":ToggleTerm<CR>"),
-				dashboard.button("q", "  Quit", ":qa<CR>"),
+				dashboard.button("q", "  Sair", ":qa<CR>"),
 			}
 			dashboard.section.footer.val = "Startup otimizado com lazy.nvim"
 			alpha.setup(dashboard.config)
@@ -176,25 +158,6 @@ return {
 			dap.listeners.before.event_exited["dapui"] = function()
 				dapui.close()
 			end
-
-			vim.keymap.set("n", "<F5>", function()
-				dap.continue()
-			end, { desc = "DAP Continue" })
-			vim.keymap.set("n", "<F10>", function()
-				dap.step_over()
-			end, { desc = "DAP Step Over" })
-			vim.keymap.set("n", "<F11>", function()
-				dap.step_into()
-			end, { desc = "DAP Step Into" })
-			vim.keymap.set("n", "<F12>", function()
-				dap.step_out()
-			end, { desc = "DAP Step Out" })
-			vim.keymap.set("n", "<leader>db", function()
-				dap.toggle_breakpoint()
-			end, { desc = "DAP Toggle Breakpoint" })
-			vim.keymap.set("n", "<leader>dB", function()
-				dap.set_breakpoint()
-			end, { desc = "DAP Set Breakpoint" })
 		end,
 	},
 	{
@@ -211,15 +174,6 @@ return {
 					require("neotest-jest")({ jestCommand = "npm test --" }),
 				},
 			})
-			vim.keymap.set("n", "<leader>tn", function()
-				require("neotest").run.run()
-			end, { desc = "Run nearest test" })
-			vim.keymap.set("n", "<leader>tf", function()
-				require("neotest").run.run(vim.fn.expand("%"))
-			end, { desc = "Run file tests" })
-			vim.keymap.set("n", "<leader>to", function()
-				require("neotest").output_panel.toggle()
-			end, { desc = "Toggle test output" })
 		end,
 	},
 

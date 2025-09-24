@@ -1,14 +1,30 @@
+-- lua/plugins/theme.lua
 return {
-	"sainnhe/gruvbox-material",
-	lazy = false,
-	name = "gruvbox-material",
+	"catppuccin/nvim",
+	name = "catppuccin",
 	priority = 1000,
 	config = function()
-		vim.g.gruvbox_material_background = "medium"
-		vim.g.gruvbox_material_enable_italic = 1
-		vim.g.gruvbox_material_better_performance = 1
-		vim.cmd.colorscheme("gruvbox-material")
+		require("catppuccin").setup({
+			flavour = "mocha", -- Can be "latte", "frappe", "macchiato", "mocha"
+			background = {
+				light = "latte",
+				dark = "macchiato",
+			},
+			transparent_background = false,
+			show_end_of_buffer = false,
+			term_colors = true,
+			integrations = {
+				cmp = true,
+				gitsigns = true,
+				nvimtree = false,
+				neotree = true,
+				telescope = true,
+				notify = true,
+				treesitter = true,
+				which_key = true,
+				lualine = true,
+			},
+		})
+		vim.cmd.colorscheme("catppuccin")
 	end,
 }
-
-

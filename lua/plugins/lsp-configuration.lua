@@ -12,7 +12,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"lua_ls",
-				"vtsls",      -- TypeScript/JavaScript (VTSLS) + Vue (via @vue/typescript-plugin)
+				"vtsls", -- TypeScript/JavaScript (VTSLS) + Vue (via @vue/typescript-plugin)
 				"cssls",
 				"gopls",
 				"intelephense",
@@ -27,15 +27,34 @@ return {
 		lazy = false,
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local lspconfig = require("lspconfig")
 
 			local on_attach = function(client, bufnr)
 				local opts = { noremap = true, silent = true, buffer = bufnr }
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("keep", { desc = "LSP Hover" }, opts))
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("keep", { desc = "LSP Go to Definition" }, opts))
-				vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, vim.tbl_extend("keep", { desc = "LSP References" }, opts))
-				vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("keep", { desc = "Code Action" }, opts))
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("keep", { desc = "Rename Symbol" }, opts))
+				vim.keymap.set(
+					"n",
+					"gd",
+					vim.lsp.buf.definition,
+					vim.tbl_extend("keep", { desc = "LSP Go to Definition" }, opts)
+				)
+				vim.keymap.set(
+					"n",
+					"<leader>gr",
+					vim.lsp.buf.references,
+					vim.tbl_extend("keep", { desc = "LSP References" }, opts)
+				)
+				vim.keymap.set(
+					{ "n", "v" },
+					"<leader>ca",
+					vim.lsp.buf.code_action,
+					vim.tbl_extend("keep", { desc = "Code Action" }, opts)
+				)
+				vim.keymap.set(
+					"n",
+					"<leader>rn",
+					vim.lsp.buf.rename,
+					vim.tbl_extend("keep", { desc = "Rename Symbol" }, opts)
+				)
 
 				-- Avoid formatting conflicts: use external formatter instead of TS servers
 				if client.name == "tsserver" or client.name == "vtsls" then
@@ -58,7 +77,10 @@ return {
 									if action.edit or type(action.command) == "table" then
 										vim.lsp.buf.execute_command(action.command)
 									else
-										vim.lsp.buf.code_action({ context = { only = { "source.fixAll.eslint" } }, apply = true })
+										vim.lsp.buf.code_action({
+											context = { only = { "source.fixAll.eslint" } },
+											apply = true,
+										})
 									end
 								end
 							end
@@ -71,12 +93,12 @@ return {
 
 			if vim.lsp and vim.lsp.enable and vim.lsp.config then
 				-- Neovim 0.11+ API (no lspconfig deprecation)
-				vim.lsp.config('*', {
+				vim.lsp.config("*", {
 					on_attach = on_attach,
 					capabilities = capabilities,
 				})
 
-				vim.lsp.config('vtsls', {
+				vim.lsp.config("vtsls", {
 					filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" },
 					settings = {
 						typescript = {
@@ -89,16 +111,26 @@ return {
 					},
 				})
 
-				vim.lsp.config('tailwindcss', {
-					filetypes = { "astro", "html", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "css" },
+				vim.lsp.config("tailwindcss", {
+					filetypes = {
+						"astro",
+						"html",
+						"javascript",
+						"javascriptreact",
+						"typescript",
+						"typescriptreact",
+						"vue",
+						"svelte",
+						"css",
+					},
 					settings = {
 						tailwindCSS = {
 							experimental = {
 								classRegex = {
 									"tw`([^`]*)`",
 									"tw\\.[^`]+`([^`]*)`",
-									"class=\"([^\"]*)\"",
-									"className=\"([^\"]*)\"",
+									'class="([^"]*)"',
+									'className="([^"]*)"',
 								},
 							},
 						},
@@ -118,12 +150,23 @@ return {
 					}
 
 					if server_name == "vtsls" then
-						server_config.filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" }
+						server_config.filetypes =
+							{ "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" }
 					end
 
 					if server_name == "tailwindcss" then
 						local util = require("lspconfig").util
-						server_config.filetypes = { "astro", "html", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "css" }
+						server_config.filetypes = {
+							"astro",
+							"html",
+							"javascript",
+							"javascriptreact",
+							"typescript",
+							"typescriptreact",
+							"vue",
+							"svelte",
+							"css",
+						}
 						server_config.root_dir = util.root_pattern(
 							"tailwind.config.js",
 							"tailwind.config.cjs",
@@ -135,7 +178,12 @@ return {
 						server_config.settings = {
 							tailwindCSS = {
 								experimental = {
-									classRegex = { "tw`([^`]*)`", "tw\\.[^`]+`([^`]*)`", "class=\"([^\"]*)\"", "className=\"([^\"]*)\"" },
+									classRegex = {
+										"tw`([^`]*)`",
+										"tw\\.[^`]+`([^`]*)`",
+										'class="([^"]*)"',
+										'className="([^"]*)"',
+									},
 								},
 							},
 						}

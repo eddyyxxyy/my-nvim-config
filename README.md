@@ -60,6 +60,7 @@ nvim
 7. Git: `:Git` (status/commit/diff), indicadores via Gitsigns
 
 ## 3) Conceitos‑chave (Vim em 5 minutos)
+
 - Modos: Normal (comandos), Insert (edição), Visual (seleção), Cmdline (`:`)
 - Salvar/Sair: `:w`, `:q`, `:wq`, `:q!`, `:wqa`
 - Buffers/Jan/Abas: `:ls`, `:bn`/`:bp`, `:split`/`:vsplit`, `<C-h/j/k/l>`, `:tabnew`
@@ -96,42 +97,21 @@ Se necessário, rode `:Lazy sync`.
 - `lua/plugins/`: módulos por plugin (ex.: `lsp-configuration.lua`, `telescope.lua`, `treesitter.lua`, `neotree.lua`, `completions.lua`, `utils.lua`, `theme.lua`)
 - `lua/plugins/lsp-configuration.lua`: LSPs, on_attach, ESLint fixAll, Tailwind config
 
-## 6) Cheatsheet (atalhos por tema)
+## 6) Cheatsheet de Atalhos
 
-- Busca/Navegação (Telescope/Neo-tree)
-  - `<C-p>`: buscar arquivos (inclui ocultos)
-  - `<leader>fg`: live grep (inclui ocultos)
-  - `<leader>fo`: abrir navegador de pastas (Telescope File Browser)
-  - `<C-n>` / `<C-c>`: abrir/fechar Neo-tree
-  - which-key: mantenha `<leader>` pressionado para ver grupos; ajuste de responsividade em `timeoutlen`
-- Terminal (ToggleTerm)
-  - `<C-\>`: alternar terminal (default: embaixo, horizontal)
-  - `<leader>tb`: terminal embaixo (horizontal)
-  - `<leader>tr`: terminal à direita (vertical)
-  - `<leader>tF`: terminal flutuante
-  - `<leader>tt`: alternar terminal (atalho extra)
-- LSP
-  - `K`: hover
-  - `gd`: definição
-  - `<leader>gr`: referências
-  - `<leader>ca`: code action
-  - `<leader>rn`: rename
-- Formatação (Conform)
-  - `<leader>gf`: formatar buffer/seleção
-  - on-save ativo (exceto C/C++)
-- Testes (Neotest)
-  - `<leader>tn`: teste mais próximo
-  - `<leader>tf`: testes do arquivo
-  - `<leader>to`: painel de saída
-- Depuração (DAP)
-  - `<F5>/<F10>/<F11>/<F12>`: continuar/passar/entrar/sair
-  - `<leader>db`: toggle breakpoint
-  - `<leader>dB`: breakpoint com condição
-  
-- Git
-  - `:Git` (vim-fugitive) para status/commits/diffs (ex.: `:Git status`, `:Git add -p`)
-- Tmux
-  - `<C-h>/<C-j>/<C-k>/<C-l>`: navegar entre splits/panes (vim-tmux-navigator)
+| Prefixo      | Ação                                    | Atalhos                                                |
+| :----------- | :-------------------------------------- | :----------------------------------------------------- |
+| **Geral**    | Salvar / Sair                           | `<leader>w` / `<leader>q`                              |
+|              | Limpar Destaque                         | `<leader>ch`                                           |
+| **Busca**    | Procurar Arquivos / Texto / Buffers     | `<C-p>` / `<leader>fg` / `<leader>fb`                  |
+|              | Abrir Pasta (File Browser)              | `<leader>fo` (use `y` para mudar cwd)                  |
+| **Janelas**  | Splits (Vertical / Horizontal / Fechar) | `<leader>sv` / `<leader>sh` / `<leader>sc`             |
+| **Editor**   | Explorador de Arquivos (Neo-tree)       | `<leader>e` (abrir/revelar), `<leader>ec` (fechar)     |
+|              | Formatar                                | `<leader>gf`                                           |
+| **LSP**      | Hover / Definição / Ação de Código      | `K` / `gd` / `<leader>ca`                              |
+|              | Renomear Símbolo / Referências          | `<leader>rn` / `<leader>gr`                            |
+| **Terminal** | Alternar (Padrão/Horiz/Vert/Flutuante)  | ``<C-`>`` / `<leader>tb` / `<leader>tr` / `<leader>tf` |
+| **Testes**   | Rodar (Mais próximo / Arquivo)          | `<leader>tn` / `<leader>tF`                            |
 
 ## 7) Playbooks por feature (passo a passo)
 
@@ -174,7 +154,7 @@ Se necessário, rode `:Lazy sync`.
 ### 7.3 LSP, Completion & Tailwind
 
 - LSPs: `lua_ls`, `vtsls` (TS/JS, arquivos `.vue` suportados), `cssls`, `pyright`, `gopls`, `intelephense`, `eslint`, `tailwindcss`.
-- Tailwind: `classRegex` para `tw\`...\``,`class="..."`,`className="..."` e cores nas sugestões via `tailwindcss-colorizer-cmp`.
+- Tailwind: `classRegex` para `tw\`...\``,`class="..."`,`className="..."`e cores nas sugestões via`tailwindcss-colorizer-cmp`.
 
 Completação e snippets (nvim-cmp + LuaSnip):
 
@@ -311,13 +291,13 @@ Trocas úteis:
 
 ### 11.6 Fluxo diário sugerido
 
-1) Abrir projeto/pasta: `<leader>fo` e mude a cwd (`y`)
-2) Abrir arquivos: `<C-p>` ou Neo-tree (`<C-n>`)
-3) Editar com LSP: hover (`K`), go to def (`gd`), rename (`<leader>rn`)
-4) Formatar: on-save ou `<leader>gf`
-5) Buscar no projeto: `<leader>fg`
-6) Terminal: `<C-\\>` (testes/commands rápidos)
-7) Git: `:Git` para status/commit/diff
+1. Abrir projeto/pasta: `<leader>fo` e mude a cwd (`y`)
+2. Abrir arquivos: `<C-p>` ou Neo-tree (`<C-n>`)
+3. Editar com LSP: hover (`K`), go to def (`gd`), rename (`<leader>rn`)
+4. Formatar: on-save ou `<leader>gf`
+5. Buscar no projeto: `<leader>fg`
+6. Terminal: `<C-\\>` (testes/commands rápidos)
+7. Git: `:Git` para status/commit/diff
 
 ### 11.7 Git básico com Fugitive
 
