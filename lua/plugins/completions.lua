@@ -6,11 +6,14 @@ return {
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
+      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
+      local format_kinds = require("tailwindcss-colorizer-cmp").formatter
+      require("tailwindcss-colorizer-cmp").setup({})
 
       cmp.setup({
         snippet = {
@@ -21,6 +24,10 @@ return {
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
+        },
+        formatting = {
+          fields = { "kind", "abbr", "menu" },
+          format = format_kinds,
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-Space>"] = cmp.mapping.complete(),

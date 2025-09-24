@@ -1,0 +1,9 @@
+-- Keymaps (placeholder):
+-- Behavior is currently defined across plugin configs. Keep this file for
+-- future user keymaps. Example template:
+--
+-- local map = vim.keymap.set
+-- local opts = { noremap = true, silent = true }
+-- map("n", "<leader>e", ":Neotree toggle<CR>", opts)
+--
+-- Do NOT remove this file; it documents the structure and allows gradual moves.

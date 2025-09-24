@@ -24,7 +24,18 @@ vim.opt.smartcase = true
 -- Enable persistent undo file
 vim.opt.undofile = true
 
+-- which-key responsiveness
+vim.opt.timeout = true
+vim.opt.timeoutlen = 300 -- ms: ajuste se quiser o popup mais lento/rápido
+
 -- Display virtual text for diagnostics
 vim.diagnostic.config({
   virtual_text = true,
 })
+
+-- Disable unused external providers to silence health warnings (can re-enable later)
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_python_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0

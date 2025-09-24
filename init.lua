@@ -19,7 +19,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {}
+local opts = { rocks = { enabled = false } }
 
-require("vim-options")
-require("lazy").setup("plugins")
+require("core")
+require("lazy").setup("plugins", opts)

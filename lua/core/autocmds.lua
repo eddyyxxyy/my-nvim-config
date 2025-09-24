@@ -1,0 +1,11 @@
+-- Autocmds (placeholder):
+-- Project/user-specific automations can be placed here in the future.
+-- Example template:
+--
+-- local aug = vim.api.nvim_create_augroup("UserAutoCmds", { clear = true })
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--   group = aug,
+--   callback = function() vim.highlight.on_yank() end,
+-- })
+--
+-- Keep this file even if empty to standardize structure.

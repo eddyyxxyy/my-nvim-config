@@ -12,6 +12,7 @@ return {
                 "bash",
                 "css",
                 "csv",
+                "regex",
                 "astro",
                 "editorconfig",
                 "gitignore",
