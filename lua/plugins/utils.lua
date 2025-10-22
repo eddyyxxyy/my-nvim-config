@@ -1,7 +1,16 @@
-return {
-    -- Automatically apply project-specific settings from .editorconfig files
-    { "gpanders/editorconfig.nvim", event = "BufReadPre" },
+-- lua/plugins/utils.lua
+-- Utilitários para melhorar a experiência de edição
 
-    -- Automatically detect indentation style for projects without an .editorconfig
-    { "tpope/vim-sleuth",           event = "BufReadPre" },
+return {
+	-- EditorConfig: Aplica configurações específicas do projeto via .editorconfig
+	{ 
+		"gpanders/editorconfig.nvim", 
+		event = "BufReadPre",
+	},
+
+	-- Sleuth: Detecta automaticamente estilo de indentação do projeto
+	{ 
+		"tpope/vim-sleuth",
+		event = "BufReadPre",
+	},
 }

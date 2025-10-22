@@ -1,10 +1,14 @@
--- Core module: centralizes base config without changing current behavior
--- This file only requires existing modules in the right order.
+--[[
+  core/init.lua
+  Módulo principal que centraliza as configurações essenciais do editor.
+  Carrega os módulos na ordem correta para garantir funcionamento adequado.
+--]]
 
--- 1) Editor options (leader, UI, diagnostic):
+-- Configurações do editor (leader, UI, diagnósticos)
 require("vim-options")
 
--- 2) Placeholders for future organization (no-ops now):
---    Keep these requires even if files are empty, to establish a stable layout.
+-- Keymaps essenciais (não específicos de plugins)
 pcall(require, "core.keymaps")
+
+-- Autocomandos (automações do editor)
 pcall(require, "core.autocmds")

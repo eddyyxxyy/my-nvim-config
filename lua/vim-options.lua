@@ -1,39 +1,69 @@
--- Set the leader key before any keymaps are defined
+--[[
+  vim-options.lua
+  Configurações essenciais do editor: indentação, UI, busca, diagnósticos.
+  Define o comportamento padrão do Neovim antes de carregar plugins.
+--]]
+
+-- ============================================================================
+-- LEADER KEY
+-- ============================================================================
+-- Define a tecla leader (espaço) antes de qualquer keymap
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Default indentation settings (will be overridden by editorconfig/sleuth)
-vim.opt.tabstop = 4      -- Number of visual spaces per <Tab>
-vim.opt.shiftwidth = 4   -- Number of spaces for indentation operations
-vim.opt.softtabstop = 4  -- Number of spaces inserted for a <Tab> in insert mode
-vim.opt.expandtab = true -- Use spaces instead of tab characters
+-- ============================================================================
+-- INDENTAÇÃO
+-- ============================================================================
+-- Configurações padrão (podem ser sobrescritas por editorconfig/sleuth)
+vim.opt.tabstop = 4       -- Número de espaços visuais por <Tab>
+vim.opt.shiftwidth = 4    -- Número de espaços para operações de indentação
+vim.opt.softtabstop = 4   -- Número de espaços inseridos ao pressionar <Tab>
+vim.opt.expandtab = true  -- Usa espaços ao invés de caracteres tab
+vim.opt.autoindent = true -- Mantém indentação da linha anterior
+vim.opt.smartindent = true -- Indentação inteligente baseada em sintaxe
 
--- General quality-of-life settings
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.termguicolors = true
-vim.opt.cursorline = true
-vim.opt.wrap = false
-vim.opt.autoindent = true
-vim.opt.smartindent = true
+-- ============================================================================
+-- INTERFACE E VISUALIZAÇÃO
+-- ============================================================================
+vim.opt.number = true          -- Mostra números de linha
+vim.opt.relativenumber = true  -- Números relativos (útil para movimentação)
+vim.opt.termguicolors = true   -- Habilita cores RGB (true color)
+vim.opt.cursorline = true      -- Destaca linha do cursor
+vim.opt.wrap = false           -- Desabilita quebra automática de linha
 
--- Search settings
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- ============================================================================
+-- BUSCA
+-- ============================================================================
+vim.opt.ignorecase = true -- Ignora maiúsculas/minúsculas na busca
+vim.opt.smartcase = true  -- Respeita case se busca contém maiúsculas
 
--- Enable persistent undo file
-vim.opt.undofile = true
+-- ============================================================================
+-- HISTÓRICO E PERSISTÊNCIA
+-- ============================================================================
+vim.opt.undofile = true -- Habilita arquivo de undo persistente (~/.local/state/nvim/undo/)
 
--- which-key responsiveness
+-- ============================================================================
+-- RESPONSIVIDADE
+-- ============================================================================
 vim.opt.timeout = true
-vim.opt.timeoutlen = 300 -- ms: ajuste se quiser o popup mais lento/rápido
+vim.opt.timeoutlen = 300 -- Tempo (ms) para aguardar sequência de teclas (ajustar para popup do which-key)
 
--- Display virtual text for diagnostics
+-- ============================================================================
+-- DIAGNÓSTICOS LSP
+-- ============================================================================
+-- Exibe texto virtual com mensagens de erro/warning ao lado da linha
 vim.diagnostic.config({
   virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
 })
 
--- Disable unused external providers to silence health warnings (can re-enable later)
+-- ============================================================================
+-- PROVIDERS EXTERNOS
+-- ============================================================================
+-- Desabilita providers não utilizados para evitar warnings no checkhealth
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_python_provider = 0
 vim.g.loaded_ruby_provider = 0
