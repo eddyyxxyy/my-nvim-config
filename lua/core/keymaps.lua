@@ -12,11 +12,10 @@ local opts = { noremap = true, silent = true }
 -- Salvar e Sair
 keymap("n", "<leader>w", "<cmd>write<CR>", { desc = "Salvar arquivo (formata automaticamente)" })
 keymap("n", "<leader>W", "<cmd>wall<CR>", { desc = "Salvar todos" })
-keymap("n", "<leader>q", function() require("mini.bufremove").delete(0, false) end, { desc = "Fechar buffer atual" })
 keymap("n", "<leader>Q", "<cmd>quitall<CR>", { desc = "Sair de tudo" })
 keymap("n", "<leader>x", "<cmd>x<CR>", { desc = "Salvar e sair da janela" })
-keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Deletar buffer (forçado)" })
 keymap("n", "<leader>bw", "<cmd>quit<CR>", { desc = "Fechar janela (não buffer)" })
+-- Nota: <leader>q e <leader>bd estão definidos em modern-tools.lua (mini.bufremove)
 
 -- ============================================================================
 -- NAVEGAÇÃO E EDIÇÃO
@@ -26,11 +25,23 @@ keymap("n", "<leader>bw", "<cmd>quit<CR>", { desc = "Fechar janela (não buffer)
 keymap("n", "<leader>ch", "<cmd>nohlsearch<CR>", { desc = "Limpar destaque de busca" })
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Limpar destaque" })
 
--- Navegação melhorada
-keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Descer (wrapped lines)" })
-keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Subir (wrapped lines)" })
+-- Navegação com setas (ao invés de hjkl)
+keymap("n", "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Descer (wrapped lines)" })
+keymap("n", "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Subir (wrapped lines)" })
+keymap("n", "<Left>", "h", { desc = "Ir para esquerda" })
+keymap("n", "<Right>", "l", { desc = "Ir para direita" })
 
--- Mover linhas selecionadas
+-- Redimensionar painéis (Alt+hjkl - não quebra navegação padrão)
+keymap("n", "<M-h>", "<cmd>vertical resize -2<CR>", { desc = "Diminuir largura do painel" })
+keymap("n", "<M-j>", "<cmd>resize +2<CR>", { desc = "Aumentar altura do painel" })
+keymap("n", "<M-k>", "<cmd>resize -2<CR>", { desc = "Diminuir altura do painel" })
+keymap("n", "<M-l>", "<cmd>vertical resize +2<CR>", { desc = "Aumentar largura do painel" })
+
+-- Alternativa adicional com Ctrl+W (padrão Vim)
+keymap("n", "<C-w><", "<cmd>vertical resize -2<CR>", { desc = "Diminuir largura" })
+keymap("n", "<C-w>>", "<cmd>vertical resize +2<CR>", { desc = "Aumentar largura" })
+
+-- Mover linhas selecionadas (mantém J e K maiúsculos)
 keymap("v", "J", ":m '>+1<CR>gv=gv", { desc = "Mover linha para baixo" })
 keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover linha para cima" })
 
@@ -60,14 +71,11 @@ keymap("n", "<leader>se", "<C-w>=", { desc = "Igualar tamanhos" })
 keymap("n", "<leader>sc", "<cmd>close<CR>", { desc = "Fechar split" })
 keymap("n", "<leader>so", "<cmd>only<CR>", { desc = "Manter apenas split atual" })
 
--- Navegar entre janelas (já configurado pelo vim-tmux-navigator)
--- <C-h>, <C-j>, <C-k>, <C-l> para navegação
-
--- Redimensionar splits
-keymap("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Aumentar altura" })
-keymap("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Diminuir altura" })
-keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Diminuir largura" })
-keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Aumentar largura" })
+-- Navegar entre janelas com Ctrl+setas (substituindo Ctrl+hjkl do vim-tmux-navigator)
+keymap("n", "<C-Up>", "<C-w>k", { desc = "Ir para painel acima" })
+keymap("n", "<C-Down>", "<C-w>j", { desc = "Ir para painel abaixo" })
+keymap("n", "<C-Left>", "<C-w>h", { desc = "Ir para painel esquerda" })
+keymap("n", "<C-Right>", "<C-w>l", { desc = "Ir para painel direita" })
 
 -- ============================================================================
 -- GERENCIAMENTO DE TABS
@@ -162,6 +170,12 @@ keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Diagnóstico anterior" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Próximo diagnóstico" })
 keymap("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Location list com diagnósticos" })
 keymap("n", "<leader>dq", vim.diagnostic.setqflist, { desc = "Quickfix com diagnósticos" })
+keymap("n", "<leader>de", vim.diagnostic.open_float, { desc = "Mostrar diagnóstico flutuante" })
+
+-- LSP Info e Diagnóstico
+keymap("n", "<leader>li", "<cmd>LspInfo<CR>", { desc = "LSP Info" })
+keymap("n", "<leader>lr", "<cmd>LspRestart<CR>", { desc = "LSP Restart" })
+keymap("n", "<leader>ll", "<cmd>LspLog<CR>", { desc = "LSP Log" })
 
 -- Mensagem informativa
 vim.api.nvim_create_autocmd("VimEnter", {
