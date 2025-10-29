@@ -19,6 +19,7 @@ return {
 				"pyright",
 				"eslint",
 				"tailwindcss",
+				"clangd", -- C/C++ LSP
 			},
 		},
 	},
@@ -30,31 +31,27 @@ return {
 
 			local on_attach = function(client, bufnr)
 				local opts = { noremap = true, silent = true, buffer = bufnr }
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("keep", { desc = "LSP Hover" }, opts))
-				vim.keymap.set(
-					"n",
-					"gd",
-					vim.lsp.buf.definition,
-					vim.tbl_extend("keep", { desc = "LSP Go to Definition" }, opts)
-				)
-				vim.keymap.set(
-					"n",
-					"<leader>gr",
-					vim.lsp.buf.references,
-					vim.tbl_extend("keep", { desc = "LSP References" }, opts)
-				)
-				vim.keymap.set(
-					{ "n", "v" },
-					"<leader>ca",
-					vim.lsp.buf.code_action,
-					vim.tbl_extend("keep", { desc = "Code Action" }, opts)
-				)
-				vim.keymap.set(
-					"n",
-					"<leader>rn",
-					vim.lsp.buf.rename,
-					vim.tbl_extend("keep", { desc = "Rename Symbol" }, opts)
-				)
+				
+				-- Hover e Documentação
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("keep", { desc = "Hover/Documentação" }, opts))
+				vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("keep", { desc = "Assinatura da função" }, opts))
+				
+				-- Navegação
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("keep", { desc = "Ir para definição" }, opts))
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("keep", { desc = "Ir para declaração" }, opts))
+				vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("keep", { desc = "Ir para implementação" }, opts))
+				vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, vim.tbl_extend("keep", { desc = "Ir para tipo" }, opts))
+				vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, vim.tbl_extend("keep", { desc = "Referências" }, opts))
+				
+				-- Code Actions e Rename
+				vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("keep", { desc = "Code Action" }, opts))
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("keep", { desc = "Renomear símbolo" }, opts))
+				vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, vim.tbl_extend("keep", { desc = "Renomear símbolo (alias)" }, opts))
+				
+				-- Formatação
+				vim.keymap.set("n", "<leader>cf", function()
+					vim.lsp.buf.format({ async = true })
+				end, vim.tbl_extend("keep", { desc = "Formatar com LSP" }, opts))
 
 				-- Avoid formatting conflicts: use external formatter instead of TS servers
 				if client.name == "tsserver" or client.name == "vtsls" then
@@ -89,7 +86,7 @@ return {
 				end
 			end
 
-			local servers = { "lua_ls", "vtsls", "cssls", "gopls", "intelephense", "pyright", "eslint", "tailwindcss" }
+			local servers = { "lua_ls", "vtsls", "cssls", "gopls", "intelephense", "pyright", "eslint", "tailwindcss", "clangd" }
 
 			if vim.lsp and vim.lsp.enable and vim.lsp.config then
 				-- Neovim 0.11+ API (no lspconfig deprecation)
