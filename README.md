@@ -1,6 +1,6 @@
 # 🚀 Configuração Profissional do Neovim
 
-Configuração moderna, modular e otimizada do Neovim com suporte completo para desenvolvimento web (JavaScript/TypeScript/Vue), Go, PHP, Python e Lua.
+Configuração moderna, modular e otimizada do Neovim com suporte completo para desenvolvimento web (JavaScript/TypeScript/Vue), Go, PHP, Python, C/C++ e Lua.
 
 ---
 
@@ -8,12 +8,13 @@ Configuração moderna, modular e otimizada do Neovim com suporte completo para 
 
 - [Características](#-características)
 - [Requisitos](#-requisitos)
-- [Instalação](#-instalação)
+- [Instalação Rápida](#-instalação-rápida)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Plugins Principais](#-plugins-principais)
-- [Atalhos Essenciais](#-atalhos-essenciais)
+- [Uso Básico](#-uso-básico)
 - [LSP e Formatação](#-lsp-e-formatação)
 - [Solução de Problemas](#-solução-de-problemas)
+- [Personalização](#-personalização)
+- [Recursos Avançados](#-recursos-avançados)
 
 ---
 
@@ -21,153 +22,129 @@ Configuração moderna, modular e otimizada do Neovim com suporte completo para 
 
 ### **Core**
 - ⚡ **Gerenciador de Plugins**: [lazy.nvim](https://github.com/folke/lazy.nvim) com lazy loading
-- 🎨 **Tema**: [Tokyo Night](https://github.com/folke/tokyonight.nvim) (+ 6 alternativas)
-- 🔍 **Fuzzy Finder**: [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+- 🎨 **Tema**: [Tokyo Night](https://github.com/folke/tokyonight.nvim) + 6 alternativas
+- 🔍 **Fuzzy Finder**: [Telescope](https://github.com/nvim-telescope/telescope.nvim) com preview
 - 📁 **File Explorer**: [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) com preview de imagens
 - 💻 **Terminal Integrado**: [ToggleTerm](https://github.com/akinsho/toggleterm.nvim) com REPLs
 
 ### **Desenvolvimento**
 - 🔧 **LSP**: Configuração automática com Mason (17+ servidores)
-- 📝 **Autocompletion**: nvim-cmp com múltiplas fontes
+- 📝 **Autocompletion**: nvim-cmp com múltiplas fontes + Tailwind colors
 - ✂️ **Snippets**: LuaSnip com jsregexp (transformações LSP)
-- 🎯 **Formatação**: Conform.nvim com prettierd/php-cs-fixer
+- 🎯 **Formatação**: Conform.nvim com prettierd/stylua/php-cs-fixer
 - 🐛 **Debug**: nvim-dap com UI integrada
 - 🧪 **Testing**: Neotest com suporte para Jest
 
 ### **Git**
-- 📊 **Git Signs**: Indicadores visuais de mudanças
+- 📊 **Git Signs**: Indicadores visuais de mudanças (gitsigns)
 - 🔄 **Fugitive**: Comandos Git nativos
 - 👀 **Diffview**: Visualização de diffs e histórico
 - 💤 **LazyGit**: Interface TUI completa
 - ⚔️ **Conflict Resolution**: Resolução visual de conflitos
 
 ### **UI/UX**
-- 🎨 **Dashboard**: Alpha-nvim com estatísticas
-- 🔔 **Notificações**: Noice.nvim + nvim-notify
-- 🗺️ **Keymaps**: Which-key para descoberta de comandos
+- 🎨 **Dashboard**: Alpha-nvim com estatísticas de startup
+- 🔔 **Notificações**: Noice.nvim + nvim-notify (UI moderna)
+- 🗺️ **Keymaps**: Which-key traduzido para português com emojis
 - 🌈 **Syntax Highlighting**: Treesitter
-- 📏 **Indentation Guides**: indent-blankline
-- ⚡ **Status Line**: Lualine com tema sincronizado
+- 📏 **Indentation Guides**: indent-blankline + mini.indentscope
+- ⚡ **Status Line**: Lualine sincronizada com tema
 
 ### **Ferramentas Modernas**
 - ✅ **TODO Comments**: Destaque de TODO/FIXME/NOTE
-- 🔍 **Trouble**: Lista de diagnósticos elegante
+- 🔍 **Trouble**: Lista elegante de diagnósticos
 - 🔁 **Mini Modules**: Pairs, surround, ai, bufremove, indentscope
-- 💡 **Illuminate**: Destaque de referências
-- 🎯 **Better Escape**: `jk`/`kj` para sair do insert mode
+- 💡 **Illuminate**: Destaque automático de referências
+- 🎯 **Better Escape**: `jk`/`jj` para sair do insert mode
 - 🎨 **Dressing**: UI melhorada para inputs/selects
-- 🌐 **Kulala**: Cliente HTTP/REST
+- 🌐 **Kulala**: Cliente HTTP/REST integrado
 
 ---
 
 ## 📦 Requisitos
 
 ### **Obrigatórios**
-- **Neovim** >= 0.10.0
-- **Git** >= 2.19.0
-- **Node.js** >= 18.0 (para LSP servers)
-- **ripgrep** (para Telescope grep)
-- **fd** ou **fdfind** (para Telescope find)
-
-### **Recomendados**
-- **Nerd Font** (ex: FiraCode Nerd Font) - para ícones
-- **xclip** ou **xsel** (Linux) - para clipboard do sistema
-- **lazygit** - para integração Git
-- **prettierd** - formatador rápido JS/TS (`npm install -g @fsouza/prettierd`)
-- **php-cs-fixer** - formatador PHP (`composer global require friendsofphp/php-cs-fixer`)
-- **Go** >= 1.21 - para desenvolvimento Go
-- **PHP** >= 8.0 + Composer - para desenvolvimento PHP
-- **Python** >= 3.8 + pip - para desenvolvimento Python
+```bash
+# Neovim >= 0.10.0
+# Git >= 2.19.0
+# Node.js >= 18.0 (para LSP servers)
+# ripgrep (para Telescope grep)
+# fd (para Telescope find)
+```
 
 ### **Instalação de Dependências**
 
 ```bash
 # Ubuntu/Debian
 sudo apt update
-sudo apt install neovim git nodejs npm ripgrep fd-find xclip
+sudo apt install neovim git nodejs npm ripgrep fd-find xclip -y
 
 # Arch Linux
 sudo pacman -S neovim git nodejs npm ripgrep fd xclip
 
-# macOS
+# macOS (Homebrew)
 brew install neovim git node ripgrep fd
 
-# Nerd Font (obrigatório para ícones)
-# Baixe de: https://www.nerdfonts.com/font-downloads
-# Recomendado: FiraCode Nerd Font
+# Nerd Font (OBRIGATÓRIO para ícones)
+# Baixe FiraCode Nerd Font de: https://www.nerdfonts.com/
+# Instale e configure no terminal
 
-# Formatadores (opcional, mas recomendado)
+# Formatadores (recomendado)
 npm install -g @fsouza/prettierd
-composer global require friendsofphp/php-cs-fixer
-
-# Adicionar Composer ao PATH (necessário para php-cs-fixer)
-echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
-# ou se usar zsh:
-echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.zshrc
+npm install -g prettier
 ```
 
 ---
 
-## 🚀 Instalação
+## 🚀 Instalação Rápida
 
-### **1. Backup da Configuração Antiga** (se existir)
-
+### **1. Backup da Configuração Antiga**
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
 ```
 
 ### **2. Clonar Esta Configuração**
-
 ```bash
-git clone https://github.com/SEU_USUARIO/nvim-config.git ~/.config/nvim
+git clone <seu-repositório> ~/.config/nvim
 cd ~/.config/nvim
 ```
 
 ### **3. Iniciar o Neovim**
-
 ```bash
 nvim
 ```
 
-O Neovim irá automaticamente:
-- Instalar o lazy.nvim
-- Baixar todos os plugins
-- Instalar LSP servers via Mason
-- Compilar Treesitter parsers
+**O Neovim irá automaticamente:**
+1. Instalar o lazy.nvim
+2. Baixar todos os plugins
+3. Instalar LSP servers via Mason
+4. Compilar Treesitter parsers
 
-**Aguarde a instalação completa!** (pode levar alguns minutos)
+**⏱️ Aguarde a instalação completa!** (2-5 minutos na primeira vez)
 
-### **4. Verificar Saúde da Configuração**
-
+### **4. Verificar Saúde**
 ```vim
 :checkhealth
 ```
 
-Resolva qualquer WARNING crítico que apareça.
+Resolva qualquer WARNING crítico.
 
-### **5. Instalar LSP Servers e Formatters**
-
-Abra o Mason:
-
+### **5. Instalar LSP Servers**
 ```vim
 :Mason
 ```
 
-Instale manualmente se necessário:
-- `lua-language-server` (Lua)
-- `typescript-language-server` (JS/TS)
-- `vtsls` (TypeScript avançado)
-- `vue-language-server` (Vue.js)
+**Servers recomendados:**
+- `lua_ls` (Lua)
+- `vtsls` ou `ts_ls` (TypeScript/JavaScript)
+- `eslint` (Linting JS/TS)
+- `tailwindcss` (Tailwind CSS)
 - `gopls` (Go)
 - `intelephense` (PHP)
 - `pyright` (Python)
-- `eslint-lsp` (Linting JS/TS)
-- `tailwindcss-language-server` (Tailwind CSS)
-- `prettierd` ou `prettier` (Formatação)
-- `stylua` (Formatação Lua)
+- `clangd` (C/C++)
 
 ---
 
@@ -175,147 +152,62 @@ Instale manualmente se necessário:
 
 ```
 ~/.config/nvim/
-├── init.lua                      # Entry point principal
+├── init.lua                     # Entry point
 ├── lua/
-│   ├── core/                     # Configurações essenciais
-│   │   ├── init.lua              # Carrega vim-options e autocmds
-│   │   ├── keymaps.lua           # Keymaps gerais (não específicos de plugins)
-│   │   └── autocmds.lua          # Autocomandos (highlight yank, trim whitespace, etc)
-│   ├── plugins/                  # Plugins modulares
-│   │   ├── completions.lua       # nvim-cmp + LuaSnip
-│   │   ├── dashboard.lua         # Alpha-nvim (dashboard)
-│   │   ├── git.lua               # Gitsigns, Fugitive, Diffview, LazyGit, Conflicts
-│   │   ├── lsp-configuration.lua # Mason + LSP configs
-│   │   ├── modern-tools.lua      # TODO comments, Trouble, Mini, Illuminate, etc
-│   │   ├── neotree.lua           # File explorer
-│   │   ├── telescope.lua         # Fuzzy finder
-│   │   ├── terminal.lua          # ToggleTerm + REPLs
-│   │   ├── themes.lua            # Tokyo Night + alternativas
-│   │   ├── treesitter.lua        # Syntax highlighting
-│   │   └── utils.lua             # Plugins utilitários (tmux-navigator, etc)
-│   ├── plugins.lua               # Plugins principais (Conform, Noice, Lualine, etc)
-│   └── vim-options.lua           # Opções do Vim (movido para core/init.lua)
-├── README.md                     # Esta documentação
-└── CHEATSHEET.md                 # Referência rápida de atalhos
+│   ├── core/                    # Configurações essenciais
+│   │   ├── init.lua             # Carrega vim-options e autocmds
+│   │   ├── keymaps.lua          # Keymaps gerais
+│   │   └── autocmds.lua         # Autocomandos
+│   ├── plugins/                 # Plugins modulares
+│   │   ├── completions.lua      # nvim-cmp + LuaSnip
+│   │   ├── dashboard.lua        # Alpha-nvim
+│   │   ├── git.lua              # Git plugins
+│   │   ├── lsp-configuration.lua# Mason + LSP
+│   │   ├── modern-tools.lua     # TODO, Trouble, Mini, etc
+│   │   ├── neotree.lua          # File explorer
+│   │   ├── telescope.lua        # Fuzzy finder
+│   │   ├── terminal.lua         # ToggleTerm
+│   │   ├── themes.lua           # Temas
+│   │   ├── treesitter.lua       # Syntax highlighting
+│   │   └── utils.lua            # Utilidades
+│   ├── plugins.lua              # Plugins principais
+│   └── vim-options.lua          # Opções do Vim
+├── README.md                    # Esta documentação
+└── CHEATSHEET.md                # Referência rápida
 ```
 
 ---
 
-## 🔌 Plugins Principais
+## 🎯 Uso Básico
 
-### **Gerenciamento e Configuração**
-| Plugin | Descrição |
-|--------|-----------|
-| [lazy.nvim](https://github.com/folke/lazy.nvim) | Gerenciador de plugins moderno e rápido |
-| [mason.nvim](https://github.com/williamboman/mason.nvim) | Gerenciador de LSP/DAP/linters/formatters |
-| [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim) | Integração Mason + LSP |
-| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | Configurações LSP |
+### **Primeiro Uso**
 
-### **Navegação e Interface**
-| Plugin | Descrição |
-|--------|-----------|
-| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder universal |
-| [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) | File explorer visual |
-| [alpha-nvim](https://github.com/goolord/alpha-nvim) | Dashboard de inicialização |
-| [which-key.nvim](https://github.com/folke/which-key.nvim) | Guia de keymaps |
-| [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) | Navegação Neovim ↔ Tmux |
+**Pressione `<Space>` e aguarde** → Abre o Which-key com todos os comandos em português!
 
-### **Edição e Completions**
-| Plugin | Descrição |
-|--------|-----------|
-| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Motor de autocompletion |
-| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | Engine de snippets |
-| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formatação assíncrona |
-| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting avançado |
-| [mini.nvim](https://github.com/echasnovski/mini.nvim) | Coleção de utilidades |
+### **Comandos Mais Usados**
 
-### **Git**
-| Plugin | Descrição |
-|--------|-----------|
-| [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Sinais de mudanças Git |
-| [vim-fugitive](https://github.com/tpope/vim-fugitive) | Comandos Git integrados |
-| [diffview.nvim](https://github.com/sindrets/diffview.nvim) | Visualização de diffs |
-| [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | Interface LazyGit |
-| [git-conflict.nvim](https://github.com/akinsho/git-conflict.nvim) | Resolução de conflitos |
+| Atalho | Ação | Descrição |
+|--------|------|-----------|
+| `<Space>ff` | Buscar arquivos | Fuzzy finder |
+| `<Space>fg` | Buscar texto | Live grep |
+| `<Space>e` | Explorador | Neo-tree |
+| `<Space>gg` | LazyGit | Git interface |
+| `<Space>w` | Salvar + Formatar | Auto-format |
+| `<Space>q` | Fechar buffer | Fecha sem afetar layout |
+| `gd` | Go to definition | LSP navigation |
+| `<Space>rn` | Rename | Renomear símbolo |
+| `<Space>ca` | Code action | Ações rápidas |
+| `<Space>li` | LSP Info | Status do LSP |
 
-### **Debug e Testing**
-| Plugin | Descrição |
-|--------|-----------|
-| [nvim-dap](https://github.com/mfussenegger/nvim-dap) | Debug Adapter Protocol |
-| [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | UI para debugging |
-| [neotest](https://github.com/nvim-neotest/neotest) | Framework de testes |
-| [neotest-jest](https://github.com/nvim-neotest/neotest-jest) | Adapter Jest |
+Para **lista completa**, consulte [CHEATSHEET.md](./CHEATSHEET.md).
 
-### **UI/UX**
-| Plugin | Descrição |
-|--------|-----------|
-| [tokyonight.nvim](https://github.com/folke/tokyonight.nvim) | Tema moderno (padrão) |
-| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Status line elegante |
-| [noice.nvim](https://github.com/folke/noice.nvim) | UI melhorada (cmdline, messages) |
-| [nvim-notify](https://github.com/rcarriga/nvim-notify) | Notificações animadas |
-| [trouble.nvim](https://github.com/folke/trouble.nvim) | Lista de diagnósticos |
-| [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | Destaque de TODOs |
-| [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | Guias de indentação |
+### **Primeiros Passos**
 
----
-
-## ⌨️ Atalhos Essenciais
-
-> **Leader Key**: `<Space>` (Espaço)
-
-### **Navegação e Arquivos**
-| Atalho | Ação |
-|--------|------|
-| `<C-p>` ou `<leader>ff` | Procurar arquivos |
-| `<leader>fg` | Buscar texto (Live Grep) |
-| `<leader>fb` | Procurar buffers |
-| `<leader>fr` | Arquivos recentes |
-| `<leader>e` | Abrir/Fechar Neo-tree |
-
-### **Edição**
-| Atalho | Ação |
-|--------|------|
-| `<leader>w` | Salvar e formatar |
-| `<leader>q` | Fechar buffer atual |
-| `<leader>Q` | Sair do Neovim |
-| `<leader>gf` | Formatar buffer/seleção |
-| `jk` ou `kj` | Sair do insert mode |
-
-### **LSP**
-| Atalho | Ação |
-|--------|------|
-| `gd` | Ir para definição |
-| `gr` | Ver referências |
-| `K` | Mostrar hover documentation |
-| `<leader>ca` | Code action |
-| `<leader>rn` | Renomear símbolo |
-| `[d` / `]d` | Diagnóstico anterior/próximo |
-
-### **Git**
-| Atalho | Ação |
-|--------|------|
-| `<leader>gg` | Abrir LazyGit |
-| `<leader>gd` | Diffview |
-| `<leader>gs` | Git status (Telescope) |
-| `<leader>gc` | Git commits |
-| `]c` / `[c` | Próximo/anterior hunk |
-
-### **Terminal**
-| Atalho | Ação |
-|--------|------|
-| `<C-\>` | Toggle terminal flutuante |
-| `<leader>th` | Terminal horizontal |
-| `<leader>tv` | Terminal vertical |
-| `<leader>gg` | LazyGit |
-
-### **Diagnósticos e Erros**
-| Atalho | Ação |
-|--------|------|
-| `<leader>xx` | Trouble: todos os diagnósticos |
-| `<leader>xX` | Trouble: diagnósticos do buffer |
-| `<leader>fd` | Telescope: diagnósticos |
-
-Para a **lista completa de atalhos**, consulte [CHEATSHEET.md](./CHEATSHEET.md).
+1. **Abrir arquivos**: `<Space>ff` ou `<Ctrl-p>`
+2. **Explorar projeto**: `<Space>e`
+3. **Buscar texto**: `<Space>fg`
+4. **Git**: `<Space>gg` (LazyGit)
+5. **Terminal**: `<Ctrl-\>`
 
 ---
 
@@ -323,96 +215,33 @@ Para a **lista completa de atalhos**, consulte [CHEATSHEET.md](./CHEATSHEET.md).
 
 ### **LSP Servers Configurados**
 
-| Linguagem | LSP Server | Status |
-|-----------|------------|--------|
-| **Lua** | lua_ls, stylua | ✅ |
-| **JavaScript/TypeScript** | vtsls, ts_ls, eslint | ✅ |
-| **Vue.js** | vue_ls | ✅ |
-| **Go** | gopls | ✅ |
-| **PHP** | intelephense | ✅ |
-| **Python** | pyright | ✅ |
-| **HTML** | html | ✅ |
-| **CSS/SCSS** | cssls, css_variables | ✅ |
-| **JSON** | jsonls | ✅ |
-| **Tailwind CSS** | tailwindcss | ✅ |
+| Linguagem | LSP Server | Formatador |
+|-----------|------------|------------|
+| Lua | lua_ls | stylua |
+| JavaScript/TypeScript | vtsls | prettierd |
+| Vue.js | vtsls + vue plugin | prettierd |
+| Go | gopls | goimports |
+| PHP | intelephense | php-cs-fixer |
+| Python | pyright | black/ruff |
+| C/C++ | clangd | clang-format |
+| HTML/CSS | html, cssls | prettierd |
+| Tailwind CSS | tailwindcss | - |
 
 ### **Formatação Automática**
 
-A formatação é executada **automaticamente ao salvar** via Conform.nvim:
-
 ```lua
-<leader>w  → Salva + Formata automaticamente
-<leader>gf → Formata manualmente (sem salvar)
+<Space>w  → Salva + Formata automaticamente
+<Space>gf → Formata sem salvar
 ```
 
-**Formatadores configurados:**
-- **Lua**: stylua
-- **JS/TS/Vue/React**: prettierd → prettier (instalado via npm)
-- **HTML/CSS/JSON/YAML/Markdown**: prettierd → prettier
-- **Go**: goimports
-- **PHP**: php-cs-fixer (instalado via composer)
+A formatação acontece **automaticamente ao salvar** via Conform.nvim.
 
-### **Configurar LSP para Novo Projeto**
+### **Verificar LSP**
 
-1. Abrir arquivo da linguagem desejada
-2. LSP deve ativar automaticamente
-3. Se não ativar, verificar `:LspInfo`
-4. Instalar server faltante via `:Mason`
-
-### **Neo-tree - Recursos Avançados**
-
-Esta configuração inclui plugins opcionais para Neo-tree:
-
-- **image.nvim**: Preview de imagens (PNG, JPG, SVG, etc) diretamente no Neo-tree
-- **nvim-lsp-file-operations**: Operações de arquivo sincronizadas com LSP
-  - Renomear arquivo → atualiza imports automaticamente
-  - Mover arquivo → atualiza paths
-  - Deletar arquivo → remove imports
-- **nvim-window-picker**: Seletor visual de janelas para comandos `_with_window_picker`
-
-**Navegação no Neo-tree:**
-- `.` (ponto) → Mudar raiz para pasta selecionada
-- `<Backspace>` → Voltar para pasta pai
-- `l` ou `<Enter>` → Expandir pasta/abrir arquivo
-- `h` → Fechar pasta
-
----
-
-## 🔧 Manutenção e Atualizações
-
-### **Atualizar Plugins**
 ```vim
-:Lazy update          # Atualizar todos os plugins
-:Lazy sync            # Sincronizar (limpar + instalar + atualizar)
-:Lazy clean           # Remover plugins não usados
-```
-
-### **Atualizar Formatadores**
-```bash
-# Prettierd (JS/TS)
-npm update -g @fsouza/prettierd
-
-# PHP CS Fixer
-composer global update friendsofphp/php-cs-fixer
-
-# Verificar versões
-prettierd --version
-php-cs-fixer --version
-```
-
-### **Atualizar LSP Servers**
-```vim
-:Mason                # Abrir Mason
-# Pressionar 'U' no servidor para atualizar
-# Ou usar: :MasonUpdate
-```
-
-### **Verificar Saúde da Configuração**
-```vim
-:checkhealth          # Verificar tudo
-:checkhealth conform  # Verificar formatadores
-:checkhealth lsp      # Verificar LSP
-:checkhealth lazy     # Verificar plugins
+:LspInfo          # Ver LSPs ativos
+:Mason            # Gerenciar servers
+:checkhealth lsp  # Diagnóstico completo
 ```
 
 ---
@@ -422,29 +251,39 @@ php-cs-fixer --version
 ### **1. Plugins Não Carregam**
 
 ```vim
-:Lazy sync
-:checkhealth lazy
+:Lazy sync        # Sincronizar plugins
+:Lazy clean       # Remover não usados
+:Lazy restore     # Restaurar versões
+:checkhealth lazy # Diagnóstico
 ```
 
 ### **2. LSP Não Funciona**
 
+**Sintomas:** `gd` não funciona, sem autocomplete, sem diagnósticos
+
+**Solução:**
 ```vim
-:LspInfo          # Ver servidores ativos
-:Mason            # Instalar/verificar LSP servers
-:checkhealth lsp
+:LspInfo          # Verificar se LSP está ativo
+:LspRestart       # Reiniciar LSP
+:Mason            # Instalar/verificar servers
+```
+
+**Verificar se o server está instalado:**
+```bash
+# Exemplo: TypeScript
+which typescript-language-server
+# Se não retornar caminho, instalar via :Mason
 ```
 
 ### **3. Ícones Não Aparecem**
 
-**Solução**: Instale uma Nerd Font
+**Causa:** Nerd Font não instalada ou não configurada no terminal
 
-```bash
-# Download: https://www.nerdfonts.com/
-# Exemplo: FiraCode Nerd Font
-
-# Linux: copiar para ~/.local/share/fonts/
-# Configurar no terminal para usar a fonte
-```
+**Solução:**
+1. Baixe FiraCode Nerd Font: https://www.nerdfonts.com/
+2. Instale a fonte no sistema
+3. Configure o terminal para usar a fonte
+4. Reinicie o terminal e Neovim
 
 ### **4. Clipboard Não Funciona**
 
@@ -452,22 +291,37 @@ php-cs-fixer --version
 # Linux
 sudo apt install xclip
 
-# macOS - já incluído
+# Testar
+echo "teste" | xclip -selection clipboard
+xclip -selection clipboard -o
 ```
 
 ### **5. Formatação Não Funciona**
 
-```bash
-# Verificar se o formatador está instalado
-:Mason
+**Verificar formatador:**
+```vim
+:ConformInfo      # Ver formatadores ativos
 
-# Testar manualmente
-:lua require("conform").format()
+# Se prettierd não estiver instalado:
+:Mason            # Instalar prettierd ou prettier
 ```
 
-### **6. Erros de Plugin (vim.tbl_flatten, vim.validate)**
+**Ou instalar manualmente:**
+```bash
+npm install -g @fsouza/prettierd
+which prettierd   # Verificar se está no PATH
+```
 
-Esses são warnings de plugins externos (neotest-jest, nvim-treesitter, noice.nvim) usando APIs antigas. **Não afetam funcionalidade** e serão corrigidos pelos autores dos plugins.
+### **6. Telescope Lento**
+
+```bash
+# Instalar ripgrep e fd
+sudo apt install ripgrep fd-find
+
+# Verificar instalação
+rg --version
+fd --version
+```
 
 ### **7. Treesitter Erros**
 
@@ -476,48 +330,276 @@ Esses são warnings de plugins externos (neotest-jest, nvim-treesitter, noice.nv
 :TSInstall <lang> # Instalar parser específico
 ```
 
----
+### **8. Neovim Lento**
 
-## 📚 Recursos Adicionais
-
-### **Aprender Vim/Neovim**
-
+1. **Verificar plugins:**
 ```vim
-:Tutor              # Tutorial interativo do Vim
-:help <comando>     # Ajuda sobre qualquer comando
+:Lazy profile     # Ver tempo de carregamento
 ```
 
-### **Documentação de Plugins**
+2. **Desabilitar plugins não usados:**
+   - Edite arquivos em `lua/plugins/`
+   - Comente plugins desnecessários
 
-- [lazy.nvim docs](https://lazy.folke.io/)
-- [Telescope docs](https://github.com/nvim-telescope/telescope.nvim#usage)
-- [LSP config guide](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md)
-- [Which-key bindings](https://github.com/folke/which-key.nvim#%EF%B8%8F-mappings)
+3. **Verificar arquivos grandes:**
+   - Desabilita automaticamente features em arquivos > 1MB
 
-### **Comunidade**
+### **9. Which-key Não Aparece**
 
-- [Neovim Discourse](https://neovim.discourse.group/)
-- [r/neovim](https://www.reddit.com/r/neovim/)
-- [Neovim Matrix Chat](https://matrix.to/#/#neovim:matrix.org)
+```vim
+:checkhealth which-key
+# Verificar se timeout está correto (300ms padrão)
+```
+
+### **10. Conflitos de Teclas**
+
+```vim
+:verbose map <tecla>   # Ver mapeamentos
+:WhichKey              # Ver todos os keymaps
+```
 
 ---
 
-## 🎯 Próximos Passos
+## 🎨 Personalização
 
-Após instalação, recomendo:
+### **Mudar Tema**
 
-1. ✅ Executar `:checkhealth` e resolver WARNINGs
-2. ✅ Abrir `:Mason` e verificar LSP servers instalados
-3. ✅ Ler [CHEATSHEET.md](./CHEATSHEET.md) para memorizar atalhos
-4. ✅ Praticar com `:Tutor`
-5. ✅ Customizar tema em `lua/plugins/themes.lua`
-6. ✅ Adicionar seus próprios keymaps em `lua/core/keymaps.lua`
+Edite `lua/plugins/themes.lua`:
+
+```lua
+-- Comentar Tokyo Night
+-- { "folke/tokyonight.nvim", priority = 1000, opts = {...} }
+
+-- Descomentar outro tema
+{ "rebelot/kanagawa.nvim", 
+  priority = 1000, 
+  config = function()
+    vim.cmd("colorscheme kanagawa")
+  end
+}
+```
+
+**Temas disponíveis:**
+- Tokyo Night (padrão)
+- Kanagawa
+- Catppuccin
+- Gruvbox
+- Rose Pine
+- Nord
+- Dracula
+
+### **Adicionar Keymaps Personalizados**
+
+Edite `lua/core/keymaps.lua`:
+
+```lua
+-- Exemplo: Abrir terminal com Ctrl+T
+keymap("n", "<C-t>", "<cmd>ToggleTerm<CR>", { desc = "Terminal" })
+
+-- Exemplo: Salvar com Ctrl+S
+keymap("n", "<C-s>", "<cmd>w<CR>", { desc = "Salvar rápido" })
+```
+
+### **Adicionar Novo LSP**
+
+1. **Via Mason:**
+```vim
+:Mason
+# Navegar com j/k, pressionar 'i' para instalar
+```
+
+2. **Adicionar à configuração:**
+
+Edite `lua/plugins/lsp-configuration.lua`:
+
+```lua
+ensure_installed = {
+  "lua_ls",
+  "vtsls",
+  -- Adicione aqui:
+  "rust_analyzer",  -- Rust
+  "zls",            -- Zig
+}
+```
+
+### **Adicionar Formatador**
+
+Edite `lua/plugins.lua` (seção Conform):
+
+```lua
+formatters_by_ft = {
+  lua = { "stylua" },
+  -- Adicione:
+  rust = { "rustfmt" },
+  zig = { "zigfmt" },
+}
+```
+
+### **Ajustar Timeout do Which-key**
+
+Edite `lua/vim-options.lua`:
+
+```lua
+vim.opt.timeoutlen = 500  -- Aumentar para 500ms (padrão: 300ms)
+```
+
+---
+
+## 🚀 Recursos Avançados
+
+### **Neo-tree - Operações Sincronizadas com LSP**
+
+Ao renomear, mover ou deletar arquivos no Neo-tree, os **imports são atualizados automaticamente**:
+
+- **Renomear** (`r`) → Atualiza imports em todos os arquivos
+- **Mover** (`m`) → Atualiza paths
+- **Deletar** (`d`) → Remove imports não utilizados
+
+### **Telescope - Busca Avançada**
+
+```vim
+<Space>fw     # Buscar palavra sob cursor
+<Space>ft     # Buscar TODOs no projeto
+<Space>fd     # Buscar diagnósticos (erros)
+<Space>fb     # Buscar buffers
+<Space>fk     # Buscar keymaps
+```
+
+### **Terminal - REPLs Integrados**
+
+```vim
+<Space>tn     # Node REPL
+<Space>tp     # Python REPL
+<Space>tg     # LazyGit (TUI)
+<Space>th     # Htop (monitor)
+```
+
+### **Debug (DAP)**
+
+```vim
+<F5>          # Iniciar/Continuar
+<F10>         # Step over
+<F11>         # Step into
+<F12>         # Step out
+<Space>db     # Toggle breakpoint
+<Space>dB     # Breakpoint condicional
+```
+
+### **Testes (Neotest)**
+
+```vim
+<Space>tn     # Rodar teste próximo
+<Space>tF     # Rodar testes do arquivo
+<Space>ts     # Sumário de testes
+<Space>to     # Output panel
+```
+
+### **Git Workflow Completo**
+
+```vim
+# 1. Ver mudanças
+<Space>gg     # LazyGit (interface completa)
+]c / [c       # Navegar entre hunks
+
+# 2. Stage mudanças
+<Space>hs     # Stage hunk
+<Space>hS     # Stage buffer inteiro
+
+# 3. Commit
+<Space>gc     # Commit via Telescope
+# Ou LazyGit: <Space>gg → c
+
+# 4. Push
+<Space>gp     # Push via Fugitive
+# Ou LazyGit: <Space>gg → P
+```
+
+---
+
+## 📚 Recursos de Aprendizado
+
+### **Tutoriais Interativos**
+```vim
+:Tutor            # Tutorial interativo do Vim (30min)
+:help <comando>   # Ajuda sobre qualquer comando
+```
+
+### **Documentação Online**
+- [Neovim Docs](https://neovim.io/doc/)
+- [Lazy.nvim Guide](https://lazy.folke.io/)
+- [Telescope Usage](https://github.com/nvim-telescope/telescope.nvim#usage)
+- [LSP Config](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md)
+
+### **Comunidades**
+- [r/neovim](https://www.reddit.com/r/neovim/)
+- [Neovim Discourse](https://neovim.discourse.group/)
+- [Discord Neovim](https://discord.gg/neovim)
+
+---
+
+## 🔄 Manutenção
+
+### **Atualizar Plugins**
+```vim
+:Lazy update      # Atualizar todos
+:Lazy sync        # Sincronizar (limpar + instalar + atualizar)
+```
+
+### **Atualizar LSP Servers**
+```vim
+:Mason
+# Pressionar 'U' no server para atualizar
+```
+
+### **Atualizar Formatadores**
+```bash
+npm update -g @fsouza/prettierd
+composer global update friendsofphp/php-cs-fixer
+```
+
+### **Limpar Cache**
+```bash
+rm -rf ~/.local/share/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.cache/nvim
+nvim  # Reinstala automaticamente
+```
+
+---
+
+## 🎯 Checklist Pós-Instalação
+
+- [ ] `:checkhealth` - Resolver WARNINGs críticos
+- [ ] `:Mason` - Verificar LSP servers instalados
+- [ ] Testar formatação: `<Space>w` em arquivo JS/TS
+- [ ] Testar LSP: `gd` em uma função
+- [ ] Testar Telescope: `<Space>ff`
+- [ ] Testar Neo-tree: `<Space>e`
+- [ ] Testar LazyGit: `<Space>gg`
+- [ ] Ler [CHEATSHEET.md](./CHEATSHEET.md)
+- [ ] Personalizar tema (opcional)
+- [ ] Adicionar keymaps pessoais (opcional)
+
+---
+
+## 💡 Dicas de Produtividade
+
+1. **Use `<Space>` frequentemente** → Which-key mostra tudo
+2. **Use `<Space>ff`** → Navegação rápida de arquivos
+3. **Use `gd`** → Go to definition (essencial)
+4. **Use `<Space>gg`** → LazyGit para todas operações Git
+5. **Use `.`** → Repetir última edição
+6. **Use `gcc`** → Comentar/descomentar rapidamente
+7. **Use `<Space>w`** → Salvar + formatar de uma vez
+8. **Use `jk`** → Sair do insert mode (mais rápido que Esc)
+9. **Use `]d` / `[d`** → Navegar entre erros
+10. **Use `:checkhealth`** → Sempre que algo estranho acontecer
 
 ---
 
 ## 📝 Licença
 
-Este projeto está disponível sob a licença MIT. Sinta-se livre para usar, modificar e distribuir.
+MIT License - Sinta-se livre para usar, modificar e distribuir.
 
 ---
 
@@ -527,4 +609,7 @@ Contribuições são bem-vindas! Abra uma issue ou pull request.
 
 ---
 
-**Desenvolvido com ❤️ para a comunidade Neovim**
+**Desenvolvido com ❤️ para a comunidade Neovim brasileira**
+
+**Versão:** 2.0  
+**Última atualização:** Outubro 2025
