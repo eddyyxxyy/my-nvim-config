@@ -14,10 +14,9 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			notify_on_error = false,
-			-- Formata automaticamente ao salvar (exceto C/C++)
+			-- Formata automaticamente ao salvar
 			format_on_save = function(bufnr)
-				local disable_filetypes = { c = true, cpp = true }
-				return { timeout_ms = 500, lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype] }
+				return { timeout_ms = 500, lsp_fallback = true }
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -34,6 +33,8 @@ return {
 				markdown = { "prettierd", "prettier", stop_after_first = true },
 				go = { "goimports" },
 				php = { "php_cs_fixer" },
+				c = { "clang_format" },
+				cpp = { "clang_format" },
 			},
 		},
 	},
@@ -89,13 +90,14 @@ return {
 	-- Indent Blankline: Guias visuais de indentação
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
-	-- Which-key: Guia interativo de keymaps
+	-- Which-key: Guia interativo de keymaps (Traduzido para Português)
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		config = function()
 			local wk = require("which-key")
 			wk.setup({
+				preset = "modern",
 				plugins = {
 					marks = true,       -- Mostra marks (m + letra)
 					registers = true,   -- Mostra registros (" + letra)
@@ -113,39 +115,209 @@ return {
 						g = true,
 					},
 				},
+				win = {
+					border = "rounded",
+					padding = { 1, 2 },
+				},
+				layout = {
+					height = { min = 4, max = 25 },
+					width = { min = 20, max = 50 },
+					spacing = 3,
+					align = "left",
+				},
 			})
 			
+			-- Registrar grupos e descrições traduzidas
 			if wk.add then
 				wk.add({
-					{ "<leader>f", group = "Buscar" },
-					{ "<leader>c", group = "Code" },
-					{ "<leader>g", group = "Git" },
-					{ "<leader>h", group = "Git Hunks" },
-					{ "<leader>t", group = "Terminal/Test" },
-					{ "<leader>d", group = "Debug/Diagnóstico" },
-					{ "<leader>s", group = "Split/Window" },
-					{ "<leader>b", group = "Buffer" },
-					{ "<leader>e", group = "Explorer" },
-					{ "<leader>x", group = "Trouble/Quickfix" },
-					{ "<leader>q", group = "Quit/Quickfix" },
-					{ "<leader>l", group = "Location List" },
-					{ "<leader><tab>", group = "Tabs" },
+					-- Grupos principais
+					{ "<leader>f", group = "🔍 Buscar" },
+					{ "<leader>c", group = "💻 Código" },
+					{ "<leader>g", group = "🌿 Git" },
+					{ "<leader>h", group = "📦 Git Hunks" },
+					{ "<leader>t", group = "🧪 Terminal/Testes" },
+					{ "<leader>d", group = "🐛 Debug/Diagnóstico" },
+					{ "<leader>s", group = "📐 Splits/Janelas" },
+					{ "<leader>b", group = "📄 Buffers" },
+					{ "<leader>e", group = "📂 Explorador" },
+					{ "<leader>x", group = "⚠️  Trouble/Problemas" },
+					{ "<leader>l", group = "📍 LSP/Location" },
+					{ "<leader>k", group = "🌐 HTTP/REST" },
+					{ "<leader><tab>", group = "📑 Tabs" },
+					
+					-- Descrições detalhadas de ações comuns
+					{ "<leader>w", desc = "💾 Salvar arquivo" },
+					{ "<leader>W", desc = "💾 Salvar todos" },
+					{ "<leader>q", desc = "✖️  Fechar buffer" },
+					{ "<leader>Q", desc = "🚪 Sair do Neovim" },
+					{ "<leader>x", desc = "💾 Salvar e sair" },
+					
+					-- Buscar (Telescope)
+					{ "<leader>ff", desc = "Arquivos" },
+					{ "<leader>fg", desc = "Texto (Grep)" },
+					{ "<leader>fo", desc = "Explorador de pasta" },
+					{ "<leader>fb", desc = "Buffers" },
+					{ "<leader>fh", desc = "Ajuda" },
+					{ "<leader>fc", desc = "Comandos" },
+					{ "<leader>fk", desc = "Keymaps" },
+					{ "<leader>fm", desc = "Marks" },
+					{ "<leader>fr", desc = "Recentes" },
+					{ "<leader>fw", desc = "Palavra sob cursor" },
+					{ "<leader>ft", desc = "TODOs" },
+					{ "<leader>fT", desc = "TODO/FIX" },
+					
+					-- Git
+					{ "<leader>gs", desc = "Status" },
+					{ "<leader>gc", desc = "Commit" },
+					{ "<leader>gp", desc = "Push" },
+					{ "<leader>gP", desc = "Pull" },
+					{ "<leader>gb", desc = "Blame" },
+					{ "<leader>gd", desc = "Diff Split" },
+					{ "<leader>gl", desc = "Log" },
+					{ "<leader>gg", desc = "LazyGit" },
+					{ "<leader>gG", desc = "LazyGit (arquivo)" },
+					{ "<leader>gv", desc = "Diffview Abrir" },
+					{ "<leader>gV", desc = "Diffview Fechar" },
+					{ "<leader>gh", desc = "Histórico arquivo" },
+					{ "<leader>gH", desc = "Histórico projeto" },
+					{ "<leader>gf", desc = "Formatar buffer" },
+					{ "<leader>gr", desc = "Referências LSP" },
+					
+					-- Git Hunks
+					{ "<leader>hs", desc = "Stage hunk" },
+					{ "<leader>hr", desc = "Reset hunk" },
+					{ "<leader>hS", desc = "Stage buffer" },
+					{ "<leader>hu", desc = "Undo stage" },
+					{ "<leader>hR", desc = "Reset buffer" },
+					{ "<leader>hp", desc = "Preview hunk" },
+					{ "<leader>hb", desc = "Blame linha" },
+					{ "<leader>hd", desc = "Diff arquivo" },
+					{ "<leader>hD", desc = "Diff último commit" },
+					
+					-- Código (LSP)
+					{ "<leader>ca", desc = "Code Action" },
+					{ "<leader>cr", desc = "Rename" },
+					{ "<leader>cs", desc = "Símbolos (Trouble)" },
+					{ "<leader>cl", desc = "LSP Info (Trouble)" },
+					{ "<leader>ch", desc = "Limpar busca" },
+					
+					-- Conflitos Git
+					{ "<leader>co", desc = "Escolher nosso" },
+					{ "<leader>ct", desc = "Escolher deles" },
+					{ "<leader>cb", desc = "Escolher ambos" },
+					{ "<leader>c0", desc = "Escolher nenhum" },
+					{ "<leader>cq", desc = "Listar conflitos" },
+					
+					-- Debug
+					{ "<leader>db", desc = "Toggle Breakpoint" },
+					{ "<leader>dB", desc = "Breakpoint Condicional" },
+					{ "<leader>dr", desc = "REPL" },
+					{ "<leader>dl", desc = "Location list diagnósticos" },
+					{ "<leader>dq", desc = "Quickfix diagnósticos" },
+					{ "<leader>de", desc = "Diagnóstico flutuante" },
+					
+					-- Splits/Janelas
+					{ "<leader>sv", desc = "Split vertical" },
+					{ "<leader>sh", desc = "Split horizontal" },
+					{ "<leader>se", desc = "Igualar tamanhos" },
+					{ "<leader>sc", desc = "Fechar split" },
+					{ "<leader>so", desc = "Manter apenas atual" },
+					
+					-- Buffers
+					{ "<leader>bd", desc = "Deletar buffer" },
+					{ "<leader>bD", desc = "Deletar (forçar)" },
+					{ "<leader>bw", desc = "Fechar janela" },
+					
+					-- Explorador
+					{ "<leader>e", desc = "Toggle explorador" },
+					{ "<leader>ec", desc = "Fechar explorador" },
+					{ "<leader>eb", desc = "Buffers (Neo-tree)" },
+					{ "<leader>eg", desc = "Git Status (Neo-tree)" },
+					
+					-- Trouble
+					{ "<leader>xx", desc = "Diagnósticos" },
+					{ "<leader>xX", desc = "Diagnósticos buffer" },
+					{ "<leader>xL", desc = "Location List" },
+					{ "<leader>xQ", desc = "Quickfix List" },
+					
+					-- LSP
+					{ "<leader>li", desc = "LSP Info" },
+					{ "<leader>lr", desc = "LSP Restart" },
+					{ "<leader>ll", desc = "LSP Log" },
+					{ "<leader>lo", desc = "Location list abrir" },
+					{ "<leader>lc", desc = "Location list fechar" },
+					
+					-- Testes
+					{ "<leader>tn", desc = "Rodar teste próximo" },
+					{ "<leader>tF", desc = "Rodar testes arquivo" },
+					{ "<leader>to", desc = "Painel de testes" },
+					{ "<leader>ts", desc = "Sumário testes" },
+					{ "<leader>tb", desc = "Toggle blame" },
+					{ "<leader>td", desc = "Toggle deletados" },
+					
+					-- Tabs
+					{ "<leader><tab>n", desc = "Nova tab" },
+					{ "<leader><tab>c", desc = "Fechar tab" },
+					{ "<leader><tab>]", desc = "Próxima tab" },
+					{ "<leader><tab>[", desc = "Tab anterior" },
+					{ "<leader><tab>o", desc = "Fechar outras" },
+					
+					-- HTTP/REST (Kulala)
+					{ "<leader>kr", desc = "Executar requisição" },
+					{ "<leader>kt", desc = "Toggle view" },
+					{ "<leader>ki", desc = "Inspecionar" },
+					
+					-- Outros
+					{ "<leader>R", desc = "Recarregar config" },
+					{ "<leader>X", desc = "Tornar executável" },
+					{ "<leader>s", desc = "Substituir palavra" },
+					{ "<leader>y", desc = "Copiar (clipboard)" },
+					{ "<leader>Y", desc = "Copiar linha (clipboard)" },
+					{ "<leader>p", desc = "Colar (clipboard)" },
+					{ "<leader>P", desc = "Colar antes (clipboard)" },
+					{ "<leader>d", desc = "Deletar (sem copiar)" },
+					
+					-- Movimentos especiais
+					{ "]d", desc = "Próximo diagnóstico" },
+					{ "[d", desc = "Diagnóstico anterior" },
+					{ "]c", desc = "Próximo hunk" },
+					{ "[c", desc = "Hunk anterior" },
+					{ "]t", desc = "Próximo TODO" },
+					{ "[t", desc = "TODO anterior" },
+					{ "]q", desc = "Próximo quickfix" },
+					{ "[q", desc = "Quickfix anterior" },
+					{ "]l", desc = "Próximo location" },
+					{ "[l", desc = "Location anterior" },
+					{ "]x", desc = "Próximo conflito" },
+					{ "[x", desc = "Conflito anterior" },
+					{ "]r", desc = "Próxima referência" },
+					{ "[r", desc = "Referência anterior" },
+					{ "]m", desc = "Próxima função" },
+					{ "[m", desc = "Função anterior" },
+					{ "]]", desc = "Próxima classe" },
+					{ "[[", desc = "Classe anterior" },
+					
+					-- LSP básico
+					{ "gd", desc = "Ir para definição" },
+					{ "K", desc = "Hover/Documentação" },
+					{ "<leader>rn", desc = "Renomear símbolo" },
 				})
 			else
+				-- Fallback para versões antigas do which-key
 				wk.register({
-					f = { name = "+buscar" },
-					t = { name = "+terminal/test" },
-					d = { name = "+debug/diagnóstico" },
-					g = { name = "+git" },
-					h = { name = "+git hunks" },
-					c = { name = "+code" },
-					s = { name = "+split/window" },
-					b = { name = "+buffer" },
-					e = { name = "+explorer" },
-					x = { name = "+trouble/quickfix" },
-					q = { name = "+quit/quickfix" },
-					l = { name = "+location list" },
-					["<tab>"] = { name = "+tabs" },
+					f = { name = "🔍 Buscar" },
+					c = { name = "💻 Código" },
+					g = { name = "🌿 Git" },
+					h = { name = "📦 Git Hunks" },
+					t = { name = "🧪 Terminal/Testes" },
+					d = { name = "🐛 Debug/Diagnóstico" },
+					s = { name = "📐 Splits/Janelas" },
+					b = { name = "📄 Buffers" },
+					e = { name = "📂 Explorador" },
+					x = { name = "⚠️  Trouble/Problemas" },
+					l = { name = "📍 LSP/Location" },
+					k = { name = "🌐 HTTP/REST" },
+					["<tab>"] = { name = "📑 Tabs" },
 				}, { prefix = "<leader>" })
 			end
 		end,
