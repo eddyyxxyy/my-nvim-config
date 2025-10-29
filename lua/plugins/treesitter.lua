@@ -19,6 +19,8 @@ return {
 				"vim",
 				"vimdoc",
 				"query",
+				"c", -- Linguagem C
+				"cpp", -- C++ (adicional)
 				"go",
 				"javascript",
 				"typescript",
