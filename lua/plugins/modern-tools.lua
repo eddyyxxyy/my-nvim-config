@@ -159,18 +159,25 @@ return {
 		version = false,
 		keys = {
 			{
+				"<leader>q",
+				function()
+					require("mini.bufremove").delete(0, false)
+				end,
+				desc = "Fechar buffer atual",
+			},
+			{
 				"<leader>bd",
 				function()
 					require("mini.bufremove").delete(0, false)
 				end,
-				desc = "Deletar Buffer",
+				desc = "Deletar buffer",
 			},
 			{
 				"<leader>bD",
 				function()
 					require("mini.bufremove").delete(0, true)
 				end,
-				desc = "Deletar Buffer (forçar)",
+				desc = "Deletar buffer (forçar)",
 			},
 		},
 	},
@@ -216,12 +223,13 @@ return {
 			})
 
 			-- Keymaps para navegar entre referências destacadas
-			vim.keymap.set("n", "]]", function()
+			-- Usando ]r e [r (r = reference) para evitar conflito com Treesitter ]] e [[
+			vim.keymap.set("n", "]r", function()
 				require("illuminate").goto_next_reference(false)
-			end, { desc = "Próxima referência" })
-			vim.keymap.set("n", "[[", function()
+			end, { desc = "Próxima referência (illuminate)" })
+			vim.keymap.set("n", "[r", function()
 				require("illuminate").goto_prev_reference(false)
-			end, { desc = "Referência anterior" })
+			end, { desc = "Referência anterior (illuminate)" })
 		end,
 	},
 
@@ -250,18 +258,23 @@ return {
 		end,
 	},
 
-	-- Better Escape: Sair do modo Insert de forma otimizada
+	-- Better Escape: Sair do modo Insert de forma otimizada (Nova API)
 	{
 		"max397574/better-escape.nvim",
 		event = "InsertEnter",
-		config = function()
-			require("better_escape").setup({
-				mapping = { "jk", "jj" }, -- Mapas para sair do Insert mode
-				timeout = vim.o.timeoutlen,
-				clear_empty_lines = false,
-				keys = "<Esc>",
-			})
-		end,
+		opts = {
+			-- Mapas para sair do Insert mode
+			mappings = {
+				i = {
+					j = {
+						k = "<Esc>",  -- jk → <Esc>
+						j = "<Esc>",  -- jj → <Esc>
+					},
+				},
+			},
+			timeout = vim.o.timeoutlen, -- Tempo limite (ms)
+			clear_empty_lines = false,  -- Não limpar linhas vazias
+		},
 	},
 
 	-- Kulala: Cliente REST integrado (alternativa ao Postman)
